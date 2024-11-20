@@ -13,75 +13,122 @@ var gateway = new braintree.BraintreeGateway({
 });
 
 //create package
+// export const createPackage = async (req, res) => {
+//   try {
+//     const {
+//       packageName,
+//       packageDescription,
+//       packageDestination,
+//       packageDays,
+//       packageNights,
+//       packageAccommodation,
+//       packageTransportation,
+//       packageMeals,
+//       packageActivities,
+//       packagePrice,
+//       packageDiscountPrice,
+//       packageOffer,
+//       packageImages,
+//     } = req.body;
+
+//     if (
+//       !packageName ||
+//       !packageDescription ||
+//       !packageDestination ||
+//       !packageAccommodation ||
+//       !packageTransportation ||
+//       !packageMeals ||
+//       !packageActivities ||
+//       !packageOffer === "" ||
+//       !packageImages
+//     ) {
+//       return res.status(200).send({
+//         success: false,
+//         message: "All fields are required!",
+//       });
+//     }
+//     if (packagePrice < packageDiscountPrice) {
+//       return res.status(200).send({
+//         success: false,
+//         message: "Regular price should be greater than discount price!",
+//       });
+//     }
+//     if (packagePrice <= 0 || packageDiscountPrice < 0) {
+//       return res.status(200).send({
+//         success: false,
+//         message: "Price should be greater than 0!",
+//       });
+//     }
+//     if (packageDays <= 0 && packageNights <= 0) {
+//       return res.status(200).send({
+//         success: false,
+//         message: "Provide days and nights!",
+//       });
+//     }
+
+//     const newPackage = await Package.create(req.body);
+//     if (newPackage) {
+//       return res.status(201).send({
+//         success: true,
+//         message: "Package created successfully",
+//       });
+//     } else {
+//       return res.status(500).send({
+//         success: false,
+//         message: "Soemthing went wrong",
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 export const createPackage = async (req, res) => {
+  const {
+    packageName,
+    packageDescription,
+    packagePrice,
+  } = req.body;
+
+  // Check if all required fields are provided
+  if (!packageName || !packageDescription) {
+    return res.status(200).send({
+      success: false,
+      message: "All fields are required!",
+    });
+  }
+
+  // Check if packageName is valid
+  if (packageName.length < 3) {
+    return res.status(400).send({
+      success: false,
+      message: "Package name must be at least 3 characters long!",
+    });
+  }
+
+  // Check if price is valid
+  if (packagePrice <= 0) {
+    return res.status(400).send({
+      success: false,
+      message: "Invalid price provided!",
+    });
+  }
+
   try {
-    const {
-      packageName,
-      packageDescription,
-      packageDestination,
-      packageDays,
-      packageNights,
-      packageAccommodation,
-      packageTransportation,
-      packageMeals,
-      packageActivities,
-      packagePrice,
-      packageDiscountPrice,
-      packageOffer,
-      packageImages,
-    } = req.body;
-
-    if (
-      !packageName ||
-      !packageDescription ||
-      !packageDestination ||
-      !packageAccommodation ||
-      !packageTransportation ||
-      !packageMeals ||
-      !packageActivities ||
-      !packageOffer === "" ||
-      !packageImages
-    ) {
-      return res.status(200).send({
-        success: false,
-        message: "All fields are required!",
-      });
-    }
-    if (packagePrice < packageDiscountPrice) {
-      return res.status(200).send({
-        success: false,
-        message: "Regular price should be greater than discount price!",
-      });
-    }
-    if (packagePrice <= 0 || packageDiscountPrice < 0) {
-      return res.status(200).send({
-        success: false,
-        message: "Price should be greater than 0!",
-      });
-    }
-    if (packageDays <= 0 && packageNights <= 0) {
-      return res.status(200).send({
-        success: false,
-        message: "Provide days and nights!",
-      });
-    }
-
+    // Create the package
     const newPackage = await Package.create(req.body);
-    if (newPackage) {
-      return res.status(201).send({
-        success: true,
-        message: "Package created successfully",
-      });
-    } else {
-      return res.status(500).send({
-        success: false,
-        message: "Soemthing went wrong",
-      });
-    }
-  } catch (error) {
-    console.log(error);
+    res.status(201).send({
+      success: true,
+      message: "Package created successfully",
+    });
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      message: "Error creating package",
+    });
   }
 };
+
 
 //get all packages
 export const getPackages = async (req, res) => {

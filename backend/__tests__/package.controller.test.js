@@ -1,5 +1,10 @@
 import { createPackage, getPackages, getPackageData, updatePackage, deletePackage } from "../controllers/package.controller.js";
 import Package from "../models/package.model.js";
+const { uploadOnCloudinary } = require("../utils/cloudinary"); // Adjust the path based on your folder structure
+
+jest.mock("../utils/cloudinary", () => ({
+  uploadOnCloudinary: jest.fn(), // Mock the function
+}));
 
 // Mocking mongoose and the Package model
 jest.mock("../models/package.model.js");
@@ -17,42 +22,44 @@ describe("Package Controller", () => {
           packageName: "",
           packageDescription: "",
         },
+        files: [], // Empty array to simulate missing images
       };
       const res = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn(),
       };
-
+  
       await createPackage(req, res);
-
-      expect(res.status).toHaveBeenCalledWith(200);
+  
+      expect(res.status).toHaveBeenCalledWith(400);
       expect(res.send).toHaveBeenCalledWith({
         success: false,
-        message: "All fields are required!",
+        message: "All fields and at least one image are required!",
       });
     });
-
+  
     it("should return an error if packageName is too short", async () => {
       const req = {
         body: {
-          packageName: "A",  // Too short
+          packageName: "A", // Too short
           packageDescription: "Valid Description",
         },
+        files: [{ path: "test-image.jpg" }], // Mock file
       };
       const res = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn(),
       };
-
+  
       await createPackage(req, res);
-
+  
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.send).toHaveBeenCalledWith({
         success: false,
         message: "Package name must be at least 3 characters long!",
       });
     });
-
+  
     it("should create a new package and return success", async () => {
       const req = {
         body: {
@@ -68,26 +75,48 @@ describe("Package Controller", () => {
           packagePrice: 1000,
           packageDiscountPrice: 800,
           packageOffer: true,
-          packageImages: ["image1.jpg", "image2.jpg"],
         },
+        files: [
+          { path: "image1.jpg" },
+          { path: "image2.jpg" },
+        ],
       };
+    
       const res = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn(),
       };
-
-      Package.create.mockResolvedValue(req.body);
-
+    
+      // Mock the Cloudinary upload function
+      const mockImageUrls = ["http://cloudinary.com/image1.jpg", "http://cloudinary.com/image2.jpg"];
+      jest.mocked(uploadOnCloudinary).mockResolvedValueOnce({ url: mockImageUrls[0] });
+      jest.mocked(uploadOnCloudinary).mockResolvedValueOnce({ url: mockImageUrls[1] });
+    
+      // Mock Package.create
+      const mockCreatedPackage = {
+        ...req.body,
+        packageImages: mockImageUrls,
+      };
+      Package.create = jest.fn().mockResolvedValue(mockCreatedPackage);
+    
       await createPackage(req, res);
-
-      expect(Package.create).toHaveBeenCalledWith(req.body);
+    
+      expect(Package.create).toHaveBeenCalledWith(expect.objectContaining({
+        packageName: "Test Package",
+        packageDescription: "Test Description",
+        packageImages: mockImageUrls,
+        packagePrice: 1000,
+      }));
+    
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.send).toHaveBeenCalledWith({
         success: true,
-        message: "Package created successfully",
+        message: "Package created successfully!",
+        package: mockCreatedPackage,
       });
     });
-
+    
+  
     it("should return an error if invalid packagePrice is provided", async () => {
       const req = {
         body: {
@@ -95,21 +124,23 @@ describe("Package Controller", () => {
           packageDescription: "Test Description",
           packagePrice: -1000, // Invalid price
         },
+        files: [{ path: "test-image.jpg" }], // Mock file
       };
       const res = {
         status: jest.fn().mockReturnThis(),
         send: jest.fn(),
       };
-
+  
       await createPackage(req, res);
-
+  
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.send).toHaveBeenCalledWith({
         success: false,
-        message: "Invalid price provided!",
+        message: "Invalid price or discount price!",
       });
     });
   });
+  
 
   describe("getPackages", () => {
     it("should return a list of packages", async () => {

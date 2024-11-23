@@ -1,5 +1,6 @@
 import express from "express";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
+import {upload} from '../middlewares/multerMiddleware.js';
 import {
   braintreeTokenController,
   createPackage,
@@ -12,7 +13,7 @@ import {
 const router = express.Router();
 
 //create package
-router.post("/create-package", requireSignIn, isAdmin, createPackage);
+router.post("/create-package", requireSignIn, isAdmin,upload, createPackage);
 
 //update package by id
 router.post("/update-package/:id", requireSignIn, isAdmin, updatePackage);

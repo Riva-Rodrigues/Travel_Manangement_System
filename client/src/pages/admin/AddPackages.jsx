@@ -54,7 +54,7 @@ const CreatePackageForm = () => {
         formDataToSend.append('packageImages', image);
       });
 
-      const response = await axios.post('http://localhost:8000/api/package/create-package', formDataToSend, {
+      const response = await axios.post(`/api/package/create-package`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

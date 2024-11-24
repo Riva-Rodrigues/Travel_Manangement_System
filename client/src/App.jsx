@@ -5,7 +5,6 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Header from "./pages/components/Header";
 import Profile from "./pages/Profile";
-import About from "./pages/About";
 import PrivateRoute from "./pages/Routes/PrivateRoute";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminRoute from "./pages/Routes/AdminRoute";
@@ -33,7 +32,6 @@ const App = () => {
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/update-package/:id" element={<UpdatePackage />} />
         </Route>
-        <Route path="/about" element={<About />} />
         <Route path="/package/:id" element={<Package />} />
         <Route path="/package/ratings/:id" element={<RatingsPage />} />
         {/* checking user auth before booking */}

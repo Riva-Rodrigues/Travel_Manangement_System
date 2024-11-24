@@ -146,8 +146,8 @@ const Booking = () => {
   }, [packageData, params]);
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <div className="w-[95%] flex flex-col items-center p-6 rounded shadow-2xl gap-3">
+    <div className="w-full min-h-screen flex flex-col items-center bg-[url('https://images.unsplash.com/photo-1650803321892-efba59b28a60?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
+      <div className="backdrop-blur-md bg-white/60 w-[90%] flex flex-col items-center p-6 mt-20 rounded-xl border gap-3 bg-white">
         <h1 className="text-center font-bold text-2xl">Book Package</h1>
         {/* user info */}
         <div className="w-full flex flex-wrap justify-center gap-2">
@@ -205,7 +205,7 @@ const Booking = () => {
             </div>
           </div>
           {/* package info */}
-          <div className="pl-3 md:border-l md:pl-6">
+          <div className="pl-3 md:pl-6">
             <div className="flex flex-col gap-1">
               <div className="flex flex-wrap gap-2">
                 <img

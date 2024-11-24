@@ -13,6 +13,10 @@ import {
   FaClock,
   FaMapMarkerAlt,
   FaShare,
+  FaHotel,
+  FaBicycle,
+  FaUtensils,
+  FaBusAlt,
 } from "react-icons/fa";
 import Rating from "@mui/material/Rating";
 import { useSelector } from "react-redux";
@@ -227,9 +231,30 @@ const Package = () => {
             />
           </div>
           <div className="w-full flex flex-col p-5 gap-2">
-            <p className="text-2xl font-bold capitalize">
-              {packageData?.packageName}
-            </p>
+            
+            <div className="w-full flex items-center justify-between bg-white rounded-lg">
+            {/* Package Name */}
+                <p className="text-4xl font-bold text-gray-800 capitalize">
+                  {packageData?.packageName}
+                </p>
+                
+                {/* Book Button */}
+                {/* <button
+                  type="button"
+                  onClick={() => {
+                    if (currentUser) {
+                      navigate(`/booking/${params?.id}`);
+                    } else {
+                      navigate("/login");
+                    }
+                  }}
+                  className="bg-green-600 text-white text-lg px-6 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+                >
+                  Book Now
+                </button> */}
+              </div>
+
+            
             {/* price */}
             <p className="flex gap-1 text-2xl font-semibold my-3">
               {packageData?.packageOffer ? (
@@ -336,128 +361,127 @@ const Package = () => {
                 )}
               </p>
             </div>
-            <div className="w-full flex justify-center sm:justify-normal">
+            <div className="flex flex-col lg:flex-row justify-between gap-8 rounded-lg">
+              {/* Left Section: Details */}
+              <div className="w-full lg:w-1/2 space-y-6">
+                {/* Accommodation */}
+                <div className="bg-white pt-5 rounded-lg p-2 flex items-center gap-4">
+                  <FaHotel className="text-3xl text-green-600" />
+                  <div>
+                    <h4 className="text-xl font-semibold text-gray-800">Accommodation:</h4>
+                    <p className="text-gray-600">{packageData?.packageAccommodation}</p>
+                  </div>
+                </div>
+                {/* Activities */}
+                <div className="bg-white rounded-lg p-2 flex items-center gap-4 ">
+                  <FaBicycle className="text-3xl text-blue-600" />
+                  <div>
+                    <h4 className="text-xl font-semibold text-gray-800">Activities:</h4>
+                    <p className="text-gray-600">{packageData?.packageActivities}</p>
+                  </div>
+                </div>
+                {/* Meals */}
+                <div className="bg-white rounded-lg p-2 flex items-center gap-4 ">
+                  <FaUtensils className="text-3xl text-yellow-600" />
+                  <div>
+                    <h4 className="text-xl font-semibold text-gray-800">Meals:</h4>
+                    <p className="text-gray-600">{packageData?.packageMeals}</p>
+                  </div>
+                </div>
+                {/* Transportation */}
+                <div className="bg-white rounded-lg p-2 flex items-center gap-4">
+                  <FaBusAlt className="text-3xl text-purple-600" />
+                  <div>
+                    <h4 className="text-xl font-semibold text-gray-800">Transportation:</h4>
+                    <p className="text-gray-600">{packageData?.packageTransportation}</p>
+                  </div>
+                </div>
+              </div>
+
+
+              {/* Right Section: Ratings/Reviews */}
+              <div className="w-full lg:w-1/3 space-y-6 flex flex-col justify-center mt-8">
               <button
-                type="button"
-                onClick={() => {
-                  if (currentUser) {
-                    navigate(`/booking/${params?.id}`);
-                  } else {
-                    navigate("/login");
-                  }
-                }}
-                className="w-full sm:w-[200px] bg-green-700 text-white rounded p-3 hover:opacity-95"
-              >
-                Book
-              </button>
-            </div>
-            {/* Description */}
-            {/* Accommodation */}
-            <div className="w-full flex flex-col mt-2">
-              <h4 className="text-xl">Accommodation:</h4>
-              <p>{packageData?.packageAccommodation}</p>
-            </div>
-            {/* Accommodation */}
-            {/* Activities */}
-            <div className="w-full flex flex-col mt-2">
-              <h4 className="text-xl">Activities:</h4>
-              <p>{packageData?.packageActivities}</p>
-            </div>
-            {/* Activities */}
-            {/* meals */}
-            <div className="w-full flex flex-col mt-2">
-              <h4 className="text-xl">Meals:</h4>
-              <p>{packageData?.packageMeals}</p>
-            </div>
-            {/* meals */}
-            {/* Transportation */}
-            <div className="w-full flex flex-col mt-2">
-              <h4 className="text-xl">Transportation:</h4>
-              <p>{packageData?.packageTransportation}</p>
-            </div>
-            {/* Transportation */}
-            <hr />
-            {/* give rating/review */}
-            <div className="w-full flex flex-col mt-2 items-center">
-              {packageRatings && (
-                <>
-                  <h4 className="text-xl">Rating/Reviews:</h4>
-                  <div
-                    className={`w-full sm:max-w-[640px] gap-2 ${
-                      !currentUser || ratingGiven
-                        ? "hidden"
-                        : "flex flex-col items-center"
-                    } `}
-                  >
-                    <Rating
-                      name="simple-controlled"
-                      className="w-max"
-                      value={ratingsData?.rating}
-                      onChange={(e, newValue) => {
-                        setRatingsData({
-                          ...ratingsData,
-                          rating: newValue,
-                        });
-                      }}
-                    />
-                    <textarea
-                      className="w-full resize-none p-3 border border-black rounded"
-                      rows={3}
-                      placeholder="Review"
-                      value={ratingsData?.review}
-                      onChange={(e) => {
-                        setRatingsData({
-                          ...ratingsData,
-                          review: e.target.value,
-                        });
-                      }}
-                    ></textarea>
-                    <button
-                      disabled={
-                        (ratingsData.rating === 0 &&
-                          ratingsData.review === "") ||
-                        loading
-                      }
-                      type="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        giveRating();
-                      }}
-                      className="w-full p-2 bg-green-700 text-white rounded disabled:opacity-80 hover:opacity-95"
-                    >
-                      {loading ? "Loading..." : "Submit"}
-                    </button>
-                    <hr />
-                  </div>
-                  <div className="mt-3 w-full gap-2 grid 2xl:grid-cols-6 xl:grid-cols-5 xlplus:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-                    <RatingCard packageRatings={packageRatings} />
-                    {packageData.packageTotalRatings > 4 && (
-                      <button
-                        onClick={() =>
-                          navigate(`/package/ratings/${params?.id}`)
-                        }
-                        className="flex items-center justify-center text-lg gap-2 p-2 rounded border hover:bg-slate-500 hover:text-white"
-                      >
-                        View All <FaArrowRight />
-                      </button>
-                    )}
-                  </div>
-                </>
-              )}
-              {(!currentUser || currentUser === null) && (
-                <button
+                  type="button"
                   onClick={() => {
-                    navigate("/login");
+                    if (currentUser) {
+                      navigate(`/booking/${params?.id}`);
+                    } else {
+                      navigate("/login");
+                    }
                   }}
-                  className="p-2 rounded text-white bg-green-700"
+                  className="w-full bg-green-600  text-white text-lg py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
                 >
-                  Rate Package
+                  Book Now
                 </button>
-              )}
+                {packageRatings && (
+                  <div className="bg-white  rounded-lg">
+                    <h4 className="text-xl font-semibold text-gray-800">Ratings/Reviews:</h4>
+                    {/* Review Form */}
+                    <div
+                      className={`w-full mt-4 space-y-4 ${
+                        !currentUser || ratingGiven ? "hidden" : "block"
+                      }`}
+                    >
+                      <Rating
+                        name="simple-controlled"
+                        className="w-max mx-auto"
+                        value={ratingsData?.rating}
+                        onChange={(e, newValue) => {
+                          setRatingsData({ ...ratingsData, rating: newValue });
+                        }}
+                      />
+                      <textarea
+                        className="w-full resize-none p-3 border rounded-lg border-gray-300 focus:ring focus:ring-green-200"
+                        rows={3}
+                        placeholder="Write your review here..."
+                        value={ratingsData?.review}
+                        onChange={(e) => {
+                          setRatingsData({ ...ratingsData, review: e.target.value });
+                        }}
+                      ></textarea>
+                      <button
+                        disabled={
+                          (ratingsData.rating === 0 && ratingsData.review === "") || loading
+                        }
+                        onClick={(e) => {
+                          e.preventDefault();
+                          giveRating();
+                        }}
+                        className="w-full bg-green-600 text-white font-medium py-2 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-70"
+                      >
+                        {loading ? "Submitting..." : "Submit Review"}
+                      </button>
+                    </div>
+                    {/* Existing Reviews */}
+                    <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                      <RatingCard packageRatings={packageRatings} />
+                      {packageData.packageTotalRatings > 4 && (
+                        <button
+                          onClick={() => navigate(`/package/ratings/${params?.id}`)}
+                          className="flex items-center justify-center gap-2 p-2 text-gray-700 border rounded-lg hover:bg-gray-200 transition"
+                        >
+                          View All Reviews <FaArrowRight />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {/* Login to Rate */}
+                {!currentUser && (
+                  <button
+                    onClick={() => navigate("/login")}
+                    className="w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+                  >
+                    Login to Rate Package
+                  </button>
+                )}
+              </div>
             </div>
-            {/* give rating/review */}
+
           </div>
         </div>
+        
       )}
     </div>
   );

@@ -229,18 +229,18 @@ const AdminDashboard = () => {
                   Edit Profile
                 </button>
               </div>
-              <div className="w-full shadow-2xl rounded-lg p-3 break-all">
+              <div className="w-full shadow-lg rounded-lg p-3 break-all bg-[#151E3D] text-white">
                 <p className="text-3xl font-semibold m-1">
                   Hi {currentUser.username} !
                 </p>
                 <p className="text-lg font-semibold">
-                  Email:{currentUser.email}
+                  Email: {currentUser.email}
                 </p>
                 <p className="text-lg font-semibold">
-                  Phone:{currentUser.phone}
+                  Phone: {currentUser.phone}
                 </p>
                 <p className="text-lg font-semibold">
-                  Address:{currentUser.address}
+                  Address: {currentUser.address}
                 </p>
               </div>
               <button
@@ -254,12 +254,12 @@ const AdminDashboard = () => {
           {/* ---------------------------------------------------------------------------------------- */}
           <div className="w-[65%] max-sm:w-full">
             <div className="main-div">
-              <nav className="w-full border-blue-500 border-b-4 overflow-x-auto navbar">
+              <nav className="w-full border-[#191970] border-b-4 overflow-x-auto navbar">
                 <div className="w-full flex gap-2">
                   <button
                     className={
                       activePanelId === 1
-                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-blue-500 text-white"
+                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-[#191970] text-white"
                         : "p-1 rounded-t transition-all duration-300 text-nowrap"
                     }
                     id="bookings"
@@ -270,7 +270,7 @@ const AdminDashboard = () => {
                   <button
                     className={
                       activePanelId === 2
-                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-blue-500 text-white"
+                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-[#191970] text-white"
                         : "p-1 rounded-t transition-all duration-300 text-nowrap"
                     }
                     id="bookings"
@@ -281,7 +281,7 @@ const AdminDashboard = () => {
                   <button
                     className={
                       activePanelId === 3
-                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-blue-500 text-white"
+                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-[#191970] text-white"
                         : "p-1 rounded-t transition-all duration-300 text-nowrap"
                     }
                     id="bookings"
@@ -292,7 +292,7 @@ const AdminDashboard = () => {
                   <button
                     className={
                       activePanelId === 4
-                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-blue-500 text-white"
+                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-[#191970] text-white"
                         : "p-1 rounded-t transition-all duration-300 text-nowrap"
                     }
                     id="bookings"
@@ -303,7 +303,7 @@ const AdminDashboard = () => {
                   <button
                     className={
                       activePanelId === 5
-                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-blue-500 text-white"
+                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-[#191970] text-white"
                         : "p-1 rounded-t transition-all duration-300 text-nowrap"
                     }
                     id="bookings"
@@ -314,7 +314,7 @@ const AdminDashboard = () => {
                   <button
                     className={
                       activePanelId === 6
-                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-blue-500 text-white"
+                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-[#191970] text-white"
                         : "p-1 rounded-t transition-all duration-300 text-nowrap"
                     }
                     id="bookings"
@@ -325,7 +325,7 @@ const AdminDashboard = () => {
                   <button
                     className={
                       activePanelId === 7
-                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-blue-500 text-white"
+                        ? "p-1 rounded-t transition-all duration-300 text-nowrap bg-[#191970] text-white"
                         : "p-1 rounded-t transition-all duration-300 text-nowrap"
                     }
                     id="bookings"

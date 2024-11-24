@@ -97,8 +97,8 @@ const AllPackages = () => {
             <div className="my-2 border-y-2 py-2">
               <ul className="w-full flex justify-around">
                 <li
-                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 ${
-                    filter === "all" && "bg-blue-500 text-white"
+                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 px-5 ${
+                    filter === "all" && "bg-blue-500 text-white px-5"
                   }`}
                   id="all"
                   onClick={(e) => {
@@ -108,8 +108,8 @@ const AllPackages = () => {
                   All
                 </li>
                 <li
-                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 ${
-                    filter === "offer" && "bg-blue-500 text-white"
+                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 px-5 ${
+                    filter === "offer" && "bg-blue-500 text-white px-5"
                   }`}
                   id="offer"
                   onClick={(e) => {
@@ -119,7 +119,7 @@ const AllPackages = () => {
                   Offer
                 </li>
                 <li
-                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 ${
+                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 px-4 ${
                     filter === "latest" && "bg-blue-500 text-white"
                   }`}
                   id="latest"
@@ -130,8 +130,8 @@ const AllPackages = () => {
                   Latest
                 </li>
                 <li
-                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 ${
-                    filter === "top" && "bg-blue-500 text-white"
+                  className={`cursor-pointer hover:scale-95 border rounded-xl p-2 transition-all duration-300 px-5 ${
+                    filter === "top" && "bg-blue-500 text-white px-5"
                   }`}
                   id="top"
                   onClick={(e) => {

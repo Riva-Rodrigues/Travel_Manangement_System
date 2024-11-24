@@ -4,6 +4,7 @@ import User from "../models/user.model.js";
 export const requireSignIn = async (req, res, next) => {
   if (req?.cookies?.X_TTMS_access_token) {
     const token = await req.cookies.X_TTMS_access_token;
+    console.log(token);
     if (!token)
       return res.status(401).send({
         success: false,
